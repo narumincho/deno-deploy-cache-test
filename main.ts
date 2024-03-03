@@ -3,10 +3,11 @@ import { delay } from "https://deno.land/std@0.217.0/async/mod.ts";
 Deno.serve(async (req: Request) => {
   switch (new URL(req.url).pathname) {
     case "/immutable":
-      return new Response("a".repeat(20_000), {
+      console.log("immutable start");
+      return new Response("ab".repeat(10_000), {
         headers: {
           "cache-control": "public, max-age=31536000, immutable",
-          "x-create-data-date-time": new Date().toISOString(),
+          //   "x-create-data-date-time": new Date().toISOString(),
         },
       });
     case "/swr":
