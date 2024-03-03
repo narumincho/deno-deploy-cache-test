@@ -28,6 +28,27 @@ Deno.serve(async (req: Request) => {
           },
         }
       );
+    case "/stream": {
+      const body = new ReadableStream<Uint8Array>({
+        start: async (controller) => {
+          for (let i = 0; i < 100; i++) {
+            console.log(i);
+            controller.enqueue(new TextEncoder().encode(`${i}\n`));
+            await delay(100);
+          }
+          controller.close();
+        },
+        cancel() {
+          console.log("キャンセルは無視!");
+        },
+      });
+      return new Response(body, {
+        headers: {
+          "content-type": "text/plain",
+          "x-content-type-options": "nosniff",
+        },
+      });
+    }
   }
   return new Response("not found", { status: 404 });
 });
