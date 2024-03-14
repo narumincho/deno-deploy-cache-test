@@ -49,6 +49,15 @@ Deno.serve(async (req: Request) => {
         },
       });
     }
+    case "log": {
+      const jsonBody = req.json();
+      console.log(jsonBody);
+      return new Response(JSON.stringify(jsonBody), {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+    }
   }
   return new Response("not found", { status: 404 });
 });
