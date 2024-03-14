@@ -49,7 +49,7 @@ Deno.serve(async (req: Request) => {
         },
       });
     }
-    case "log": {
+    case "/log": {
       const jsonBody = await req.json();
       console.log(jsonBody);
       return new Response(JSON.stringify(jsonBody), {
